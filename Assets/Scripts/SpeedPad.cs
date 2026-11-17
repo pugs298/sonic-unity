@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class SpeedPad : MonoBehaviour
 {
-    public float force = 16f;
+    public float boostSpeed = 34f;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
-            return;
-
-        var controller = other.GetComponent<CharacterController>();
-        if (controller == null)
-            return;
-
-        controller.Move(transform.forward * force * Time.deltaTime);
+        if (!other.CompareTag("Player")) return;
+        PlayerController player = other.GetComponent<PlayerController>();
+        if (player != null) player.ApplySpeedPad(transform.forward, boostSpeed);
     }
 }
